@@ -4,23 +4,21 @@ using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider), typeof(Rigidbody), typeof(ConstantForce))]
 public class FeatherFall : MonoBehaviour {
-	[SerializeField, Range(0.01f, 1)] private float m_FloatForce = 0.8f;
-	[SerializeField, Range(0.01f, 1)] private float m_SlidePower = 0.2f;
-	[SerializeField, Range(0.01f, 1)] private float m_PuffPower = 0.05f;
-	[SerializeField, Range(0.01f, 1)] private float m_PuffDelayMin = 0.2f;
-	[SerializeField, Range(0.01f, 1)] private float m_PuffDelayMax = 0.3f;
+	[SerializeField, Range(0.01f, 1f)] private float m_FloatForce = 0.8f;
+	[SerializeField, Range(0.01f, 1f)] private float m_SlidePower = 0.2f;
+	[SerializeField, Range(0.01f, 1f)] private float m_PuffPower = 0.05f;
+	[SerializeField, Range(0.01f, 1f)] private float m_PuffDelayMin = 0.2f;
+	[SerializeField, Range(0.01f, 1f)] private float m_PuffDelayMax = 0.3f;
 
 	private Rigidbody m_Rigidbody;
 	private BoxCollider m_Collider;
 	private Vector3 m_AntigravityForce;
-
 	private float m_LastTime;
 	private float m_Delay;
 	private Vector3[] m_EdgePoints;
 	private Vector3 m_SlideVector;
 	private Vector3 m_LastPuffPosition;
 	private Vector3 m_LastPuffPower;
-
 
 	private void Start() {
 		m_Rigidbody = GetComponent<Rigidbody>();
@@ -33,10 +31,10 @@ public class FeatherFall : MonoBehaviour {
 		Vector3 max = m_Collider.bounds.max;
 
 		m_EdgePoints = new[] {
-			new Vector3(0, 0, min.z) + center,      //bottom
-			new Vector3(0, 0, max.z) + center,      //top
-			new Vector3(min.x, 0, 0) + center,      //left
-			new Vector3(max.x, 0, 0) + center,      //right
+			new Vector3(    0, 0, min.z) + center,  //bottom
+			new Vector3(    0, 0, max.z) + center,  //top
+			new Vector3(min.x, 0,     0) + center,  //left
+			new Vector3(max.x, 0,     0) + center,  //right
 			new Vector3(min.x, 0, min.z) + center,  //bottom left
 			new Vector3(max.x, 0, min.z) + center,  //bottom right
 			new Vector3(min.x, 0, max.z) + center,  //top left
@@ -45,12 +43,8 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (!m_Rigidbody) {
-			return;
-		}
-
-		UpdatePuffs();
 		UpdateSlide();
+		UpdatePuffs();
 	}
 
 	private void UpdateSlide() {
@@ -58,7 +52,6 @@ public class FeatherFall : MonoBehaviour {
 		m_SlideVector.x = normal.x*normal.y;
 		m_SlideVector.z = normal.z*normal.y;
 		m_SlideVector.y = -(normal.x*normal.x) - normal.z*normal.z;
-
 		m_Rigidbody.AddForce(m_SlideVector.normalized*m_SlidePower);
 	}
 
@@ -71,10 +64,6 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void Puff() {
-		if (!m_Rigidbody) {
-			return;
-		}
-
 		float downwardVelocity = -m_Rigidbody.velocity.y;
 		if (downwardVelocity > 0.001f) {
 			Vector3 puffPosition = GetPuffPosition();
@@ -90,7 +79,6 @@ public class FeatherFall : MonoBehaviour {
 		List<Vector3> validEdges = worldEdges.Where(v => v.y <= worldOffset.y).ToList();
 
 		if (validEdges.Count == 0) {
-			Debug.LogWarning("Couldn't find a lower edge.");
 			validEdges = worldEdges;
 		}
 
