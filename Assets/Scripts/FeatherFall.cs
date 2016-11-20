@@ -104,8 +104,10 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
+		// Slide Vector
 		Debug.DrawRay(transform.position, m_SlideVector, Color.blue);
 
+		// Last Puff Vector
 		Vector3 puffPosition = transform.TransformPoint(m_LastPuffPosition);
 		Color puffColor = Color.white;
 		float timeSinceLast = Time.time - m_LastTime;
