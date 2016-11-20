@@ -35,7 +35,6 @@ public class FeatherFall : MonoBehaviour {
     Vector3 max = m_Collider.bounds.max;
 
     m_EdgePoints = new[] {
-      
       new Vector3(0, 0, min.z) + center,      //bottom
       new Vector3(0, 0, max.z) + center,      //top
       new Vector3(min.x, 0, 0) + center,      //left
