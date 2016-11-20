@@ -27,8 +27,8 @@ public class FeatherFall : MonoBehaviour {
 		GetComponent<ConstantForce>().force = m_AntigravityForce*m_FloatForce;
 
 		Vector3 center = transform.InverseTransformPoint(m_Collider.bounds.center);
-		Vector3 min = m_Collider.bounds.min;
-		Vector3 max = m_Collider.bounds.max;
+		Vector3 min = transform.InverseTransformPoint(m_Collider.bounds.min);
+		Vector3 max = transform.InverseTransformPoint(m_Collider.bounds.max);
 
 		m_EdgePoints = new[] {
 			new Vector3(    0, 0, min.z) + center,  //bottom
