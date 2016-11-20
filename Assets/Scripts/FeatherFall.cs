@@ -1,9 +1,4 @@
-﻿//  ---------------------------------------------------------------------
-//  Copyright (c) 2016 Magic Leap. All Rights Reserved.
-//  Magic Leap Confidential and Proprietary
-//  ---------------------------------------------------------------------
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,8 +16,11 @@ public class FeatherFall : MonoBehaviour {
 
 	private float m_LastTime;
 	private float m_Delay;
-
 	private Vector3[] m_EdgePoints;
+	private Vector3 m_SlideVector;
+	private Vector3 m_LastPuffPosition;
+	private Vector3 m_LastPuffPower;
+
 
 	private void Start() {
 		m_Rigidbody = GetComponent<Rigidbody>();
@@ -42,7 +40,8 @@ public class FeatherFall : MonoBehaviour {
 			new Vector3(min.x, 0, min.z) + center,  //bottom left
 			new Vector3(max.x, 0, min.z) + center,  //bottom right
 			new Vector3(min.x, 0, max.z) + center,  //top left
-			new Vector3(max.x, 0, max.z) + center}; //top right
+			new Vector3(max.x, 0, max.z) + center   //top right
+		};
 	}
 
 	private void Update() {
@@ -53,10 +52,6 @@ public class FeatherFall : MonoBehaviour {
 		UpdatePuffs();
 		UpdateSlide();
 	}
-
-	private Vector3 m_SlideVector;
-	private Vector3 m_LastPuffPosition;
-	private Vector3 m_LastPuffPower;
 
 	private void UpdateSlide() {
 		Vector3 normal = transform.up;
@@ -69,7 +64,6 @@ public class FeatherFall : MonoBehaviour {
 
 	private void UpdatePuffs() {
 		if (m_LastTime + m_Delay < Time.time) {
-			//Debug.Log("Puff!");
 			Puff();
 			m_LastTime = Time.time;
 			m_Delay = Random.Range(m_PuffDelayMin, m_PuffDelayMax);

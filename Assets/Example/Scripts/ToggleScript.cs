@@ -1,9 +1,4 @@
-﻿//  ---------------------------------------------------------------------
-//  Copyright (c) 2016 Magic Leap. All Rights Reserved.
-//  Magic Leap Confidential and Proprietary
-//  ---------------------------------------------------------------------
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ToggleScript : MonoBehaviour {
   [SerializeField] private Behaviour m_Target;
