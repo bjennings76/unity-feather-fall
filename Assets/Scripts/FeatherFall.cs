@@ -91,16 +91,17 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
-		// Slide Vector
+		// Draw Slide Vector
 		Debug.DrawRay(transform.position, m_SlideVector, Color.blue);
 
-		// Last Puff Vector
+		// Draw Last Puff Vector
 		Vector3 puffPosition = transform.TransformPoint(m_LastPuffPosition);
 		Color puffColor = Color.white;
 		float timeSinceLast = Time.time - m_LastTime;
 		puffColor.a = 1 - timeSinceLast/m_Delay;
 		Debug.DrawRay(puffPosition, m_LastPuffPower*10, puffColor);
 
+		// Draw Edge Points
 		foreach (Vector3 edgePoint in m_EdgePoints) {
 			Vector3 edgePosition = transform.TransformPoint(edgePoint);
 			Gizmos.color = Color.white;
