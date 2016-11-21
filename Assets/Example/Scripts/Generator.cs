@@ -12,6 +12,6 @@ public class Generator : MonoBehaviour {
 		}
 
 		m_LastTime = Time.time;
-		Destroy(Instantiate(m_Prefab, transform, false), 10);
+		Destroy(Instantiate(m_Prefab, transform.position, transform.rotation), 10);
 	}
 }

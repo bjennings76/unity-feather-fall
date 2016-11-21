@@ -162,7 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FloatForce: 0.95
   m_SlidePower: 0.2
-  m_PuffPower: 0.05
+  m_PuffPower: 0.01
   m_PuffDelayMin: 0.4
   m_PuffDelayMax: 0.5
 --- !u!114 &114000011740585998
