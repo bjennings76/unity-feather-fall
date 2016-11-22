@@ -91,6 +91,10 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
+		if (!Application.isPlaying) {
+			return;
+		}
+
 		// Draw Slide Vector
 		Debug.DrawRay(transform.position, m_SlideVector, Color.blue);
 
