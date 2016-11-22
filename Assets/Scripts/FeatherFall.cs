@@ -91,7 +91,7 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
-		if (!Application.isPlaying) {
+		if (m_EdgePoints == null) {
 			return;
 		}
 
