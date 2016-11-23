@@ -5,6 +5,7 @@ public class FlyCamera : MonoBehaviour {
 	[SerializeField] private float m_ShiftAdd = 250.0f; //multiplied by how long shift is held.  Basically running
 	[SerializeField] private float m_MaxShift = 1000.0f; //Maximum speed when holdin gshift
 	[SerializeField] private float m_CamSens = 0.25f; //How sensitive it with mouse
+	[SerializeField] private bool m_FlyOnMouseDown = true;
 
 	private Vector3 m_LastMouse = new Vector3(255, 255, 255);
 		//kind of in the middle of the screen, rather than at the top (play)
@@ -16,6 +17,11 @@ public class FlyCamera : MonoBehaviour {
 	}
 
 	private void Update() {
+		if (m_FlyOnMouseDown && !Input.GetMouseButton(0)) {
+			m_LastMouse = Input.mousePosition;
+			return;
+		}
+
 		m_LastMouse = Input.mousePosition - m_LastMouse;
 		m_LastMouse = new Vector3(-m_LastMouse.y*m_CamSens, m_LastMouse.x*m_CamSens, 0);
 		m_LastMouse = new Vector3(transform.eulerAngles.x + m_LastMouse.x, transform.eulerAngles.y + m_LastMouse.y, 0);
