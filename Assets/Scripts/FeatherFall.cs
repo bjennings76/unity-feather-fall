@@ -63,21 +63,21 @@ public class FeatherFall : MonoBehaviour {
 	private void Puff() {
 		float velocity = m_Rigidbody.velocity.y < 0 ? m_Rigidbody.velocity.magnitude : -m_Rigidbody.velocity.magnitude;
 
-	  if (Mathf.Abs(velocity) < 0.001f) {
-	    return;
-	  }
+		if (Mathf.Abs(velocity) < 0.001f) {
+			return;
+		}
 
-	  Vector3 puffPosition = GetPuffPosition();
-	  m_LastPuffPosition = transform.InverseTransformPoint(puffPosition);
+		Vector3 puffPosition = GetPuffPosition();
+		m_LastPuffPosition = transform.InverseTransformPoint(puffPosition);
 
-	  Vector3 pushAngle = Vector3.Dot(transform.up, Vector3.down) > 0 ? -Vector3.up : Vector3.up;
-	  m_LastPuffPower = pushAngle*m_AntigravityForce.magnitude*m_PuffPower*velocity/100;
+		Vector3 pushAngle = Vector3.Dot(transform.up, Vector3.down) > 0 ? -Vector3.up : Vector3.up;
+		m_LastPuffPower = pushAngle*m_AntigravityForce.magnitude*m_PuffPower*velocity/100;
 
-	  Vector3 powerVector = transform.TransformDirection(m_LastPuffPower);
-	  m_Rigidbody.AddForceAtPosition(powerVector, puffPosition, ForceMode.Impulse);
+		Vector3 powerVector = transform.TransformDirection(m_LastPuffPower);
+		m_Rigidbody.AddForceAtPosition(powerVector, puffPosition, ForceMode.Impulse);
 
-	  m_LastTime = Time.time;
-	  m_Delay = Random.Range(m_PuffDelayMin, m_PuffDelayMax);
+		m_LastTime = Time.time;
+		m_Delay = Random.Range(m_PuffDelayMin, m_PuffDelayMax);
 	}
 
 	private Vector3 GetPuffPosition() {
@@ -112,7 +112,7 @@ public class FeatherFall : MonoBehaviour {
 		float timeSinceLast = Time.time - m_LastTime;
 		puffColor.a = 1 - timeSinceLast/m_Delay;
 		Vector3 powerVector = transform.TransformDirection(m_LastPuffPower);
-		Debug.DrawRay(puffPosition, powerVector * 10, puffColor);
+		Debug.DrawRay(puffPosition, powerVector*10, puffColor);
 
 		// Draw Edge Points
 		foreach (Vector3 edgePoint in m_EdgePoints) {
