@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692492, g: 0.4967869, b: 0.57508546, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692528, g: 0.49678713, b: 0.5750856, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -169,14 +169,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Prefab: {fileID: 1000012941755776, guid: 18a0e785ddbd4864eaa1a2b2cd163d06, type: 2}
-  m_Delay: 0.3
+  m_Delay: 0.5
+  m_DestroyDelay: 10
+  m_RotateRandomly: 1
+  m_InitialVelocity: {x: 0, y: 5, z: 0}
 --- !u!4 &351886328
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 351886326}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.197, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -197,6 +200,7 @@ GameObject:
   - 81: {fileID: 589282601}
   - 114: {fileID: 589282606}
   - 114: {fileID: 589282607}
+  - 135: {fileID: 589282608}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -266,7 +270,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 589282600}
   m_LocalRotation: {x: -0.074990846, y: 0.90285414, z: -0.1758002, w: -0.38513002}
-  m_LocalPosition: {x: 3.1801848, y: 5.03, z: 3.0602925}
+  m_LocalPosition: {x: 4.26, y: 6.96, z: 4.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -278,7 +282,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 589282600}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edd0f3ae4ab0d7349ac1e9311dc0e0d1, type: 3}
   m_Name: 
@@ -286,7 +290,7 @@ MonoBehaviour:
   m_MainSpeed: 10
   m_ShiftAdd: 25
   m_MaxShift: 100
-  m_CamSens: 0.25
+  m_Sensitivity: 0.25
 --- !u!114 &589282607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,11 +299,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 589282600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b607686c7adcf04fa11c312725c14fa, type: 3}
+  m_Script: {fileID: 11500000, guid: a3c7cd5c4304b3e46855dfccd2fa82b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 589282606}
-  m_ToggleKey: 102
+  m_PixelsPerUnit: 100
+--- !u!135 &589282608
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 589282600}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1694850882
 GameObject:
   m_ObjectHideFlags: 0
