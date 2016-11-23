@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider), typeof(Rigidbody), typeof(ConstantForce))]
@@ -29,15 +28,16 @@ public class FeatherFall : MonoBehaviour {
 		Vector3 center = m_Collider.center;
 		Vector3 size = m_Collider.size/2;
 
+		// Edge points listed in circular order so the opposite point can be easily chosen.
 		m_EdgePoints = new[] {
-			new Vector3(      0, 0, -size.z) + center,  //bottom
-			new Vector3(      0, 0,  size.z) + center,  //top
-			new Vector3(-size.x, 0,       0) + center,  //left
-			new Vector3( size.x, 0,       0) + center,  //right
-			new Vector3(-size.x, 0, -size.z) + center,  //bottom left
-			new Vector3( size.x, 0, -size.z) + center,  //bottom right
 			new Vector3(-size.x, 0,  size.z) + center,  //top left
-			new Vector3( size.x, 0,  size.z) + center   //top right
+			new Vector3(      0, 0,  size.z) + center,  //top
+			new Vector3( size.x, 0,  size.z) + center,  //top right
+			new Vector3( size.x, 0,       0) + center,  //right
+			new Vector3( size.x, 0, -size.z) + center,  //bottom right
+			new Vector3(      0, 0, -size.z) + center,  //bottom
+			new Vector3(-size.x, 0, -size.z) + center,  //bottom left
+			new Vector3(-size.x, 0,       0) + center   //left
 		};
 	}
 
@@ -47,11 +47,13 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void UpdateSlide() {
+		// This generates a vector along the plane of the object pointing most downward.
 		Vector3 normal = transform.up;
 		m_SlideVector.x = normal.x*normal.y;
 		m_SlideVector.z = normal.z*normal.y;
 		m_SlideVector.y = -(normal.x*normal.x) - normal.z*normal.z;
-		m_Rigidbody.AddForce(m_SlideVector.normalized*m_SlidePower);
+		m_SlideVector = m_SlideVector*m_SlidePower;
+		m_Rigidbody.AddForce(m_SlideVector);
 	}
 
 	private void UpdatePuffs() {
@@ -81,16 +83,24 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private Vector3 GetPuffPosition() {
-		Vector3 worldOffset = m_Collider.bounds.center;
-		List<Vector3> worldEdges = m_EdgePoints.Select<Vector3, Vector3>(transform.TransformPoint).ToList();
-		List<Vector3> validEdges = worldEdges.Where(v => v.y <= worldOffset.y).ToList();
+		// Gets a random point along the object's edge.
+		int pointIndex = Random.Range(0, m_EdgePoints.Length - 1);
+		m_LastPuffPosition = m_EdgePoints[pointIndex];
+		Vector3 worldPoint = transform.TransformPoint(m_LastPuffPosition);
 
-		if (validEdges.Count == 0) {
-			validEdges = worldEdges;
+		// Chooses an edge position on the opposite side if the point chosen isn't on the leading edge.
+		if (!IsLeadingEdge(worldPoint)) {
+			m_LastPuffPosition = m_EdgePoints[(pointIndex + m_EdgePoints.Length/2)%m_EdgePoints.Length];
+			worldPoint = transform.TransformPoint(m_LastPuffPosition);
 		}
 
-		int edgeIndex = Random.Range(0, validEdges.Count - 1);
-		return validEdges[edgeIndex];
+		return worldPoint;
+	}
+
+	private bool IsLeadingEdge(Vector3 globalPoint) {
+		Vector3 globalCenter = m_Collider.bounds.center;
+		Vector3 pointDirection = globalPoint - globalCenter;
+		return Vector3.Dot(pointDirection, m_Rigidbody.velocity) > 0;
 	}
 
 	private Vector3 GetAntigravityForce() {
