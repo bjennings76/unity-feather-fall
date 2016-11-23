@@ -5,6 +5,7 @@ public class InstanceGenerator : MonoBehaviour {
   [SerializeField, Range(0.1f, 10f)] private float m_Delay = 2;
   [SerializeField, Range(1f, 20f)] private float m_DestroyDelay = 10;
   [SerializeField] private bool m_RotateRandomly;
+  [SerializeField] private Vector3 m_InitialVelocity = Vector3.zero;
   private float m_LastTime;
 
   private void Update() {
@@ -13,7 +14,14 @@ public class InstanceGenerator : MonoBehaviour {
     }
 
     m_LastTime = Time.time;
-    Destroy(Instantiate(m_Prefab, transform.position, GetRotation()), m_DestroyDelay);
+    GameObject instance = (GameObject)Instantiate(m_Prefab, transform.position, GetRotation());
+
+    if (!m_InitialVelocity.Equals(Vector3.zero)) {
+      Rigidbody rb = instance.GetComponent<Rigidbody>();
+      rb.velocity = m_InitialVelocity;
+    }
+
+    Destroy(instance, m_DestroyDelay);
   }
 
   private Quaternion GetRotation() {
