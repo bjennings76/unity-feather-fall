@@ -61,9 +61,9 @@ public class FeatherFall : MonoBehaviour {
 	}
 
 	private void Puff() {
-		float velocity = m_Rigidbody.velocity.y < 0 ? m_Rigidbody.velocity.magnitude : m_Rigidbody.velocity.magnitude * 0.5f;
+		float velocity = m_Rigidbody.velocity.y < 0 ? m_Rigidbody.velocity.magnitude : -m_Rigidbody.velocity.magnitude;
 
-	  if (velocity < 0.001f) {
+	  if (Mathf.Abs(velocity) < 0.001f) {
 	    return;
 	  }
 
@@ -112,7 +112,7 @@ public class FeatherFall : MonoBehaviour {
 		float timeSinceLast = Time.time - m_LastTime;
 		puffColor.a = 1 - timeSinceLast/m_Delay;
 		Vector3 powerVector = transform.TransformDirection(m_LastPuffPower);
-		Debug.DrawRay(puffPosition, powerVector * 100, puffColor);
+		Debug.DrawRay(puffPosition, powerVector * 10, puffColor);
 
 		// Draw Edge Points
 		foreach (Vector3 edgePoint in m_EdgePoints) {

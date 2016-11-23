@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Prefab: {fileID: 1000012941755776, guid: 18a0e785ddbd4864eaa1a2b2cd163d06, type: 2}
   m_Delay: 0.5
   m_DestroyDelay: 10
-  m_RotateRandomly: 0
+  m_RotateRandomly: 1
   m_InitialVelocity: {x: 0, y: 5, z: 0}
 --- !u!4 &351886328
 Transform:
