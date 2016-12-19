@@ -2,14 +2,14 @@
 
 public class InstanceGenerator : MonoBehaviour {
   [SerializeField] private GameObject m_Prefab;
-  [SerializeField, Range(0.1f, 10f)] private float m_Delay = 2;
+  [SerializeField, Range(0.1f, 10f)] private float m_GenerateDelay = 2;
   [SerializeField, Range(1f, 20f)] private float m_DestroyDelay = 10;
   [SerializeField] private bool m_RotateRandomly;
   [SerializeField] private Vector3 m_InitialVelocity = Vector3.zero;
   private float m_LastTime;
 
   private void Update() {
-    if (m_LastTime + m_Delay > Time.time) {
+    if (m_LastTime + m_GenerateDelay > Time.time) {
       return;
     }
 
@@ -18,7 +18,9 @@ public class InstanceGenerator : MonoBehaviour {
 
     if (!m_InitialVelocity.Equals(Vector3.zero)) {
       Rigidbody rb = instance.GetComponent<Rigidbody>();
-      rb.velocity = m_InitialVelocity;
+      if (rb) {
+        rb.velocity = m_InitialVelocity;
+      }
     }
 
     Destroy(instance, m_DestroyDelay);
